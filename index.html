@@ -48,26 +48,36 @@ const JOBS=[
 {n:'Skan usterek',i:'diag',l:1,r:500,pn:'Czujniki',pc:150},{n:'Naprawa silnika',i:'diag',l:2,r:1600,pn:'Części silnika',pc:500},{n:'Remont turbo',i:'diag',l:3,r:3200,pn:'Turbosprężarka',pc:1000},
 {n:'Chip tuning',i:'tune',l:1,r:1200,pn:'Chip ECU',pc:400,hp:15},{n:'Wydech sportowy',i:'tune',l:2,r:2400,pn:'Wydech sportowy',pc:800,hp:25},
 {n:'Stage 2',i:'tune',l:3,r:5000,pn:'Kit Stage 2',pc:1700,hp:45},{n:'Stage 3',i:'tune',l:4,r:10000,pn:'Kit Stage 3',pc:3400,hp:80}];
-const CARS=[['Trabant 601',26,2000],['Syrena 105',40,2200],['Fiat 126p',23,2500],['Škoda Favorit',54,3500],['Fiat Seicento',54,4000],['Fiat Panda',69,4200],['Polonez Caro',78,4500],['Daewoo Matiz',52,4500],['Lada Niva',80,5000],['Škoda Felicia',68,5500],['Opel Corsa B',60,6000],['VW Golf III',75,6500],['Renault Clio II',75,7000],['Peugeot 206',75,7200],['Ford Fiesta Mk5',80,7500],['Seat Ibiza',90,8000],['Opel Astra G',100,9000],['Citroën Saxo VTS',120,9500],['Volvo V40',115,10000],['Toyota Corolla E11',110,11000],['VW Passat B5',130,12000],['Honda Civic EK',125,14000],['Opel Calibra',150,14500],['Mercedes W124 E220',150,15000],['Audi A4 B6',130,16000],['Mazda MX-5 NA',115,18000],['BMW E46 320d',150,20000],['Toyota Celica T23',190,20000],['VW Golf IV GTI',150,22000],['Audi TT 1.8T',180,24000],['Škoda Octavia RS',180,26000],['Audi S4 B5',265,28000],['Ford Focus RS',215,30000],['Subaru Impreza WRX',215,35000],['Honda S2000',240,38000],['Ford Mustang GT',300,40000],['Mazda RX-7 FD',255,42000],['Mitsubishi Lancer Evo VI',280,45000],['BMW M3 E46',343,50000],['BMW M5 E39',400,55000],['Porsche 911 (996)',320,60000],['Nissan Skyline R34',280,70000],['Mercedes C63 AMG',457,75000],['Toyota Supra A80',330,90000],['Nissan GT-R R35',480,100000],['Porsche 911 Turbo',480,120000],['Ferrari F430',490,140000],['Lamborghini Gallardo',520,150000]];
+const CARS=[['Trabant 601',26,2000,'0.6 2T'],['Syrena 105',40,2200,'0.8 2T'],['Fiat 126p',23,2500,'0.65 OHV'],['Škoda Favorit',54,3500,'1.3 OHV'],['Fiat Seicento',54,4000,'1.1 8V'],['Fiat Panda',69,4200,'1.1 FIRE'],['Polonez Caro',78,4500,'1.6 OHC'],['Daewoo Matiz',52,4500,'0.8 6V'],['Lada Niva',80,5000,'1.7 8V'],['Škoda Felicia',68,5500,'1.3 8V'],['Opel Corsa B',60,6000,'1.2 8V'],['VW Golf III',75,6500,'1.6 8V'],['Renault Clio II',75,7000,'1.4 8V'],['Peugeot 206',75,7200,'1.4 8V'],['Ford Fiesta Mk5',80,7500,'1.25 Zetec 16V'],['Seat Ibiza',90,8000,'1.4 16V'],['Opel Astra G',100,9000,'1.6 16V'],['Citroën Saxo VTS',120,9500,'1.6 TU5J4 16V'],['Volvo V40',115,10000,'1.8 16V'],['Toyota Corolla E11',110,11000,'1.6 VVT-i'],['VW Passat B5',130,12000,'1.8 20V'],['Honda Civic EK',125,14000,'1.6 VTEC'],['Opel Calibra',150,14500,'2.0 C20XE 16V'],['Mercedes W124 E220',150,15000,'2.2 M111 16V'],['Audi A4 B6',130,16000,'2.0 ALT'],['Mazda MX-5 NA',115,18000,'1.6 B6 DOHC'],['BMW E46 320d',150,20000,'2.0 M47 diesel turbo'],['Toyota Celica T23',190,20000,'1.8 2ZZ-GE VVTL-i'],['VW Golf IV GTI',150,22000,'1.8T 20V turbo'],['Audi TT 1.8T',180,24000,'1.8T 20V turbo'],['Škoda Octavia RS',180,26000,'1.8T 20V turbo'],['Audi S4 B5',265,28000,'2.7 V6 biturbo'],['Ford Focus RS',215,30000,'2.0 Duratec turbo'],['Subaru Impreza WRX',215,35000,'2.0 EJ20 turbo'],['Honda S2000',240,38000,'2.0 F20C VTEC'],['Ford Mustang GT',300,40000,'4.6 V8'],['Mazda RX-7 FD',255,42000,'1.3 13B-REW biturbo'],['Mitsubishi Lancer Evo VI',280,45000,'2.0 4G63 turbo'],['BMW M3 E46',343,50000,'3.2 S54 R6'],['BMW M5 E39',400,55000,'5.0 S62 V8'],['Porsche 911 (996)',320,60000,'3.4 flat-6'],['Nissan Skyline R34',280,70000,'2.6 RB26DETT turbo'],['Mercedes C63 AMG',457,75000,'6.2 M156 V8'],['Toyota Supra A80',330,90000,'3.0 2JZ-GTE turbo'],['Nissan GT-R R35',480,100000,'3.8 VR38 V6 biturbo'],['Porsche 911 Turbo',480,120000,'3.6 flat-6 biturbo'],['Ferrari F430',490,140000,'4.3 V8'],['Lamborghini Gallardo',520,150000,'5.0 V10']];
 const N=CARS.length,CL=['Pan Janusz','Kasia','Marek','Pani Ewa','Tomek','Bartek','Pani Zofia','Kamil','Ola','Dawid'];
 let S=null,slot=0,scr='menu',tab='o',conf='',mode='load',dy=null,tt,cat=0;
 const fmt=n=>Math.round(n).toLocaleString('pl-PL')+' zł';
 const lv=()=>1+Math.floor(Math.sqrt(S.xp/60)),minLv=i=>Math.max(1,Math.ceil((i-2)/3));
-const val=c=>Math.round((CARS[c.ci][2]*(1-.15*c.d.length)+(c.hp-c.base)*50)/10)*10;
+const val=c=>Math.round((CARS[c.ci][2]*(1-.15*c.d.length)+(c.hp-c.base)*50+(c.m?mcost(c)*.5:0))/10)*10;
 const all=()=>S.cars.concat(S.own),pos=()=>(1+Math.sin(Date.now()/280))/2*100;
 const can=o=>{const j=JOBS[o.j];return S.items[j.i]>=j.l&&!S.br[j.i]};
 const MG=["0:Spuść stary olej — stukaj!|1:Dobierz właściwą część|4:Dolej oleju — trzymaj i puść w zielonym polu","0:Zdejmij koło — stukaj!|1:Dobierz klocki|2:Dokręć zacisk w zielonej strefie","0:Zdejmij sprężynę — stukaj!|1:Dobierz amortyzator|3:Dokręć śruby w zapamiętanej kolejności","0:Rozkręć skrzynię — stukaj!|3:Skręć docisk w zapamiętanej kolejności|2:Dociśnij sprzęgło w zielonej strefie","1:Wskaż właściwy czujnik|3:Wpisz zapamiętany kod serwisowy|2:Skalibruj w zielonej strefie","0:Zdejmij głowicę — stukaj!|3:Dokręć głowicę w zapamiętanej kolejności|4:Nałóż uszczelkę — trzymaj i puść w polu","0:Odkręć kolektor — stukaj!|4:Napełnij turbo olejem — trzymaj i puść w polu|2:Wyważ wirnik w zielonej strefie","1:Wybierz właściwy chip|2:Wgraj mapę w zielonej strefie|3:Wpisz zapamiętany kod autoryzacji","0:Zdejmij stary wydech — stukaj!|4:Spawaj — trzymaj i puść w polu|1:Dobierz tłumik","4:Doładuj ciśnienie — trzymaj i puść w polu|3:Wpisz zapamiętany kod mapy|2:Dostrój zawór w zielonej strefie","3:Wpisz zapamiętany kod kalibracji|2:Zsynchronizuj turbiny w zielonej strefie|4:Dolej nitro — trzymaj i puść w polu"];
 const steps=i=>MG[i].split('|').map(x=>{const k=x.indexOf(':');return[+x.slice(0,k),x.slice(k+1)]});
 const tg=()=>5+Math.min(3,Math.floor(Math.sqrt(S.fol)/30)),pm=()=>1+Math.min(.5,Math.sqrt(S.fol)/400);
+const MODS=[['t','Turbo',[['Garrett GT2560R',1800,.18,1],['Garrett GT2860RS',3500,.30,2],['Garrett GT3076R',7000,.48,3],['Garrett GTX3582R',14000,.70,4]]],['c','Wałki rozrządu',[['Wałki sportowe',900,.06,2],['Wałki Stage 2',2200,.11,3]]],['i','Dolot',[['Filtr stożkowy K&N',250,.03,1],['Dolot sportowy',900,.06,2]]],['f','Paliwo',[['Wtryski 440cc',700,.05,2],['Pompa + wtryski 650cc',2000,.09,3]]]];
+function ini(c){c.e=c.e||CARS[c.ci][3];c.m=c.m||{t:0,c:0,i:0,f:0};c.tn=c.tn||{ig:0,afr:13,bo:1};c.o=c.o||{ig:Math.round((Math.random()*6-3)*2)/2,afr:12.6+Math.round(Math.random()*6-3)/10}}
+const isT=c=>/turbo/.test(c.e||'')||c.m.t>0;
+function mpct(c){return MODS.reduce((a,[k,,o])=>a+(c.m[k]?o[c.m[k]-1][2]:0),0)}
+function mcost(c){return MODS.reduce((a,[k,,o])=>a+(c.m[k]?o[c.m[k]-1][1]:0),0)}
+function ev(c,tn){const T=isT(c),L=c.m.t,igs=c.o.ig-(T?2:0)-L*.7,afs=c.o.afr-(T?1:0)-L*.1,safe=1+L*.2,bo=T?tn.bo:1;
+const fI=Math.max(.5,1-.004*(tn.ig-igs)**2),fA=Math.max(.5,1-.12*(tn.afr-afs)**2),fB=1+(bo-1)*.35;
+return{T,igs,afs,safe,pk:c.hp*(1+mpct(c))*fI*fA*fB,r:.04*Math.max(0,tn.ig-igs-2)+.12*Math.max(0,tn.afr-afs-.6)+(T?.6*Math.max(0,bo-safe):0)}}
+const fv=(k,v)=>k=='ig'?(v>0?'+':'')+(+v).toFixed(1)+'°':k=='afr'?(+v).toFixed(1):(+v).toFixed(2)+' bar';
+window.tn=(k,v)=>{const c=all()[dy.car];c.tn[k]=+v;const e=$('#v_'+k);if(e)e.textContent=fv(k,+v)};
 const key=n=>'wt3_slot'+n,rnd=a=>a[Math.random()*a.length|0],sh=a=>a.sort(()=>Math.random()-.5);
 function toast(m){const t=$('#toast');t.textContent=m;t.style.opacity=1;clearTimeout(tt);tt=setTimeout(()=>t.style.opacity=0,2200)}
 const cmax=()=>Math.min(N-1,Math.random()*(lv()*3+3)|0);
 function mk(av){const c=[];JOBS.forEach((j,i)=>{if(S.items[j.i]+(av?0:1)>=j.l)c.push(i)});const ji=rnd(c),j=JOBS[ji],ci=cmax();
 return{id:Math.random().toString(36).slice(2),j:ji,car:ci,cl:rnd(CL),p:Math.round(j.r*(.9+Math.random()*.35)*(1+ci*.03)/5)*5}}
 function fill(){while(S.orders.length<tg())S.orders.push(mk(S.orders.filter(can).length<3))}
-function mkM(){const ci=cmax(),d=[];for(let k=1+(Math.random()*3|0);k>0;k--)d.push(Math.random()*7|0);const c={ci,n:CARS[ci][0],hp:CARS[ci][1],base:CARS[ci][1],d,best:0,st:'własne',t:0};c.p=Math.round(val(c)*.85/10)*10;return c}
+function mkM(){const ci=cmax(),d=[];for(let k=1+(Math.random()*3|0);k>0;k--)d.push(Math.random()*7|0);const c={ci,n:CARS[ci][0],e:CARS[ci][3],hp:CARS[ci][1],base:CARS[ci][1],d,best:0,st:'własne',t:0};ini(c);c.p=Math.round(val(c)*.85/10)*10;return c}
 function mkt(){while(S.mkt.length<4)S.mkt.push(mkM())}
-function norm(d){d.br=d.br||{};d.parts=d.parts||{};d.own=d.own||[];d.mkt=d.mkt||[];d.nb=d.nb||Date.now()+9e4;d.no=Date.now()+3e4;d.fol=d.fol==null?50:d.fol;d.loan=d.loan||0;d.pt=0;if(d.job&&!d.job.o)d.job=null;if(d.job){d.job.seq=null;d.job.f=0;d.job.h=0;d.job.in=[]}S=d;fill();mkt();return d}
+function norm(d){d.br=d.br||{};d.parts=d.parts||{};d.own=d.own||[];d.mkt=d.mkt||[];d.own.forEach(ini);d.mkt.forEach(ini);d.nb=d.nb||Date.now()+9e4;d.no=Date.now()+3e4;d.fol=d.fol==null?50:d.fol;d.loan=d.loan||0;d.pt=0;if(d.job&&!d.job.o)d.job=null;if(d.job){d.job.seq=null;d.job.f=0;d.job.h=0;d.job.in=[]}S=d;fill();mkt();return d}
 function newGame(){norm({money:300,xp:0,done:0,fol:50,loan:0,items:{tool:1,lift:0,diag:0,tune:0,dyno:0},orders:[],cars:[]})}
 function save(){if(!S)return;st.set(key(slot),JSON.stringify(S));st.set('wt3_last',slot)}
 function readSlot(n){try{return JSON.parse(st.get(key(n)))}catch(e){return null}}
@@ -78,7 +88,7 @@ function adv(ok){const J=S.job;J.sc+=ok?1:0;J.s++;J.seq=null;J.in=[];J.f=0;J.h=0
 function done(){const J=S.job,o=J.o,j=JOBS[o.j],q=J.sc,m=[.4,.7,.9,1.15][q],g=j.hp?Math.round(j.hp*[.5,.75,1,1.15][q]):0;let msg;S.job=null;
 if(J.own<0){const pay=Math.round(o.p*m*pm());S.money+=pay;S.xp+=Math.round(pay/10);S.done++;S.fol+=Math.round((q*q+q*3+1)*(1+o.car/10));
 if(S.loan>0){const r=Math.min(S.loan,Math.round(pay*.25));S.loan-=r;S.money-=r}
-if(g){S.cars.push({n:CARS[o.car][0],hp:CARS[o.car][1]+g,base:CARS[o.car][1],best:0,st:j.n});if(S.cars.length>12)S.cars.shift()}
+if(g){S.cars.push({n:CARS[o.car][0],e:CARS[o.car][3],hp:CARS[o.car][1]+g,base:CARS[o.car][1],best:0,st:j.n});if(S.cars.length>12)S.cars.shift()}
 S.orders=S.orders.filter(x=>x.id!=o.id);fill();msg='+'+fmt(pay)}
 else{const c=S.own[J.own];S.xp+=10;S.fol+=q*2+Math.round(g/3);if(g){c.hp+=g;c.t++;msg='+'+g+' KM'}else if(q>0){c.d.splice(c.d.indexOf(o.j),1);msg='usterka naprawiona'}else msg='naprawa nieudana, część stracona'}
 save();toast('Jakość '+q+'/3 · '+msg)}
@@ -117,6 +127,7 @@ else if(a=='post'){const t=Date.now();if(t<S.pt)return toast('Poczekaj '+Math.ce
 else if(a=='ad'){const c=Math.round(100+S.fol*.3);if(S.money<c)return;S.money-=c;const g=Math.round(15+S.fol*.08*(.5+Math.random()));S.fol+=g;save();toast('📸 Reklama: +'+g+' obserwujących')}
 else if(a=='loan'){if(S.loan>0||lv()<(v==500?1:v==1000?3:5))return;S.money+=v;S.loan=Math.round(v*1.15);save();toast('Pożyczka: '+fmt(v))}
 else if(a=='rp'){const x=Math.min(S.loan,S.money,v||S.loan);S.loan-=x;S.money-=x;save()}
+else if(a=='mod'){const c=S.own[dy.car-S.cars.length],nx=MODS.find(x=>x[0]==v)[2][c.m[v]];if(!nx||S.money<nx[1])return;if(S.br.tune)return toast('Awaria zestawu tuningowego!');if(S.items.tune<nx[3])return toast('Wymaga zestawu tuningowego poz. '+nx[3]);S.money-=nx[1];c.m[v]++;dy.c=null;save();toast('Zamontowano: '+nx[0])}
 else if(a=='cat'){cat=!cat}
 else if(a=='save'){save();toast('Zapisano grę')}
 else if(a=='exit'){save();scr='menu'}
@@ -149,19 +160,22 @@ h+=`<div class="cd"><b>${it.n}</b> <span class="pill">poz. ${l}/${it.max}</span>
 h+='<h2>Części</h2>';JOBS.forEach((j,i)=>{h+=`<div class="cd row"><div><b>${j.pn}</b><div class="mu">do: ${j.n} · masz: ${S.parts[j.pn]||0}</div></div><div style="display:flex;gap:6px"><button class="s" ${S.money<j.pc?'disabled':''} onclick="A('bp','${i},1')">${fmt(j.pc)}</button><button class="s g" ${S.money<j.pc*5?'disabled':''} onclick="A('bp','${i},5')">×5</button></div></div>`});return h}
 function garH(){let h=`<h2>Moje auta (${S.own.length}/4)</h2>`;
 if(!S.own.length)h+='<div class="cd mu">Brak aut. Kup auto na giełdzie, napraw usterki, podrasuj i sprzedaj z zyskiem.</div>';
-S.own.forEach((c,i)=>{const t=c.t<4?JOBS[7+c.t]:null;h+=`<div class="cd"><div class="row"><b>${c.n}</b><b style="color:var(--ok)">${fmt(val(c))}</b></div><div class="mu">${c.hp} KM · usterek: ${c.d.length}</div>`+
+S.own.forEach((c,i)=>{const t=c.t<4?JOBS[7+c.t]:null;h+=`<div class="cd"><div class="row"><b>${c.n}</b><b style="color:var(--ok)">${fmt(val(c))}</b></div><div class="mu">${c.hp} KM · ${c.e} · usterek: ${c.d.length}</div>`+
 c.d.map(ji=>`<button class="s g" style="margin:6px 6px 0 0" onclick="A('rep','${i},${ji}')">🔧 ${JOBS[ji].n}</button>`).join('')+
 (t?`<button class="s" style="margin:6px 6px 0 0" onclick="A('tun','${i},${7+c.t}')">⚡ ${t.n} (+${t.hp} KM)</button>`:'')+`<button class="s g" style="margin-top:6px" onclick="A('sell',${i})">Sprzedaj</button></div>`});
 h+=`<div class="row"><h2>Giełda używanych</h2><button class="s g" onclick="A('mref')">Odśwież · 100 zł</button></div>`;
-S.mkt.forEach((c,i)=>h+=`<div class="cd"><div class="row"><div><b>${c.n}</b><div class="mu">${c.hp} KM · usterki: ${c.d.map(x=>JOBS[x].n).join(', ')}</div><div class="mu">Wartość teraz: ${fmt(val(c))}</div></div><button class="s" ${S.money<c.p?'disabled':''} onclick="A('buy2',${i})">${fmt(c.p)}</button></div></div>`);
+S.mkt.forEach((c,i)=>h+=`<div class="cd"><div class="row"><div><b>${c.n}</b><div class="mu">${c.hp} KM · ${c.e}</div><div class="mu">usterki: ${c.d.map(x=>JOBS[x].n).join(', ')}</div><div class="mu">Wartość teraz: ${fmt(val(c))}</div></div><button class="s" ${S.money<c.p?'disabled':''} onclick="A('buy2',${i})">${fmt(c.p)}</button></div></div>`);
 h+=`<h2>Katalog aut (${N})</h2><button class="g" style="margin-bottom:10px" onclick="A('cat')">${cat?'Ukryj listę':'Pokaż listę'}</button>`;
-if(cat)h+=CARS.map((c,i)=>{const L=minLv(i);return `<div class="cd row"><div><b>${c[0]}</b><div class="mu">${c[1]} KM · wartość ${fmt(c[2])}</div></div><span class="pill">${L<=lv()?'dostępne':'🔒 poz. '+L}</span></div>`}).join('');return h}
-function dynH(){const L=all();if(!S.items.dyno)return '<div class="cd"><b>Brak hamowni</b><div class="mu">Kup hamownię w sklepie, aby mierzyć moc aut.</div></div>';
+if(cat)h+=CARS.map((c,i)=>{const L=minLv(i);return `<div class="cd row"><div><b>${c[0]}</b><div class="mu">${c[1]} KM · ${c[3]} · wartość ${fmt(c[2])}</div></div><span class="pill">${L<=lv()?'dostępne':'🔒 poz. '+L}</span></div>`}).join('');return h}
+function dynH(){const L=all();if(!S.items.dyno)return '<div class="cd"><b>Brak hamowni</b><div class="mu">Kup hamownię w sklepie, aby mierzyć moc i stroić auta.</div></div>';
 if(!L.length)return '<div class="cd"><b>Brak aut do testu</b><div class="mu">Wykonaj zlecenie tuningowe lub kup własne auto w garażu.</div></div>';
-if(!dy||!L[dy.car])dy={car:L.length-1};const c=L[dy.car];
-return `<h2>Hamownia</h2><div class="cd"><select style="width:100%;font:inherit;padding:10px;border-radius:10px;background:var(--bg);color:var(--tx);border:1px solid var(--bd)" onchange="A('pick',this.value)">${L.map((x,i)=>`<option value="${i}" ${i==dy.car?'selected':''}>${x.n} (${x.st})</option>`).join('')}</select>
-<div class="mu" style="margin:8px 0">Seria: ${c.base} KM · teraz ok. ${c.hp} KM${c.best?' · Najlepszy pomiar: <b>'+c.best+' KM</b>':''}</div>
-<canvas id="cv" width="340" height="190"></canvas><div id="lv" class="mu" style="text-align:center;margin:6px 0">Gotowy do pomiaru</div><button id="rb" onclick="A('run')">Uruchom pomiar</button></div>`}
+if(!dy||!L[dy.car])dy={car:L.length-1};const c=L[dy.car],own=dy.car>=S.cars.length;
+let h=`<h2>Hamownia</h2><div class="cd"><select style="width:100%;font:inherit;padding:10px;border-radius:10px;background:var(--bg);color:var(--tx);border:1px solid var(--bd)" onchange="A('pick',this.value)">${L.map((x,i)=>`<option value="${i}" ${i==dy.car?'selected':''}>${x.n} (${x.st})</option>`).join('')}</select>
+<div class="mu" style="margin:8px 0">Seria: ${c.base} KM · baza ${c.hp} KM${c.best?' · rekord: <b>'+c.best+' KM</b>':''}${c.e?'<br>Silnik: '+c.e:''}</div>`;
+if(own){const e=ev(c,c.tn);h+='<b>Strojenie</b>'+[['ig','Zapłon',-10,10,.5],['afr','Mieszanka AFR',10.5,14.7,.1]].concat(e.T?[['bo','Doładowanie',.5,2.2,.05]]:[]).map(([k,n,a,b,st])=>`<div class="row"><span>${n}</span><b id="v_${k}">${fv(k,c.tn[k])}</b></div><input type="range" style="width:100%" min="${a}" max="${b}" step="${st}" value="${c.tn[k]}" oninput="tn('${k}',this.value)">`).join('')+(e.T?`<div class="mu">Bezpieczne doładowanie tej turbiny: ok. ${e.safe.toFixed(1)} bar</div>`:'<div class="mu">Silnik wolnossący — brak doładowania.</div>')}
+h+=`<canvas id="cv" width="340" height="190" style="margin-top:8px"></canvas><div id="lv" class="mu" style="text-align:center;margin:6px 0">Gotowy do pomiaru</div><div id="hn" class="mu" style="text-align:center;margin-bottom:6px">${dy.hint||''}</div><button id="rb" onclick="A('run')">Uruchom pomiar</button></div>`;
+if(own)h+='<h2>Silnik — modyfikacje</h2>'+MODS.map(([k,n,o])=>{const l=c.m[k],nx=o[l],ok=nx&&S.items.tune>=nx[3]&&!S.br.tune;return `<div class="cd"><div class="row"><div><b>${n}</b><div class="mu">${l?o[l-1][0]+' (+'+Math.round(o[l-1][2]*100)+'%)':(k=='t'&&!isT(c)?'brak (wolnossący)':'seryjne')}</div></div>${nx?`<button class="s" ${S.money<nx[1]||!ok?'disabled':''} onclick="A('mod','${k}')">${nx[0]}<br>${fmt(nx[1])}${S.items.tune<nx[3]?' 🔒 zestaw poz. '+nx[3]:''}</button>`:'<span class="pill">max</span>'}</div></div>`}).join('');
+return h}
 function pauseH(){const f=S.fol,tier=f<200?'Początkujący':f<1000?'Lokalny warsztat':f<5000?'Znany w mieście':f<20000?'Influencer':'Gwiazda tuningu',ad=Math.round(100+f*.3);
 let h=`<h2>📸 Instagram</h2><div class="cd"><div class="row"><b>${f.toLocaleString('pl-PL')} obserwujących</b><span class="pill">${tier}</span></div><div class="mu">Bonus do zarobków: +${Math.round((pm()-1)*100)}% · zleceń naraz: ${tg()}</div><div class="row" style="margin-top:8px;gap:8px"><button onclick="A('post')">Wstaw post</button><button class="g" ${S.money<ad?'disabled':''} onclick="A('ad')">Reklama · ${fmt(ad)}</button></div></div><h2>🏦 Bank</h2><div class="cd">`;
 if(S.loan>0)h+=`<b>Dług: ${fmt(S.loan)}</b><div class="mu">25% płatności za zlecenia idzie na spłatę.</div><div class="row" style="margin-top:8px;gap:8px"><button ${S.money<=0?'disabled':''} onclick="A('rp',0)">Spłać wszystko</button><button class="g" onclick="A('rp',500)">Spłać 500</button></div>`;
@@ -173,11 +187,16 @@ g.clearRect(0,0,W,H);g.strokeStyle=mu;g.globalAlpha=.3;for(let i=1;i<5;i++){g.be
 const n=dy.c.hp.length-1,mh=Math.max(...dy.c.hp)*1.1,mn=Math.max(...dy.c.nm)*1.1;
 [[dy.c.hp,mh,ac],[dy.c.nm,mn,bl]].forEach(([a,m,col])=>{g.strokeStyle=col;g.lineWidth=2.5;g.beginPath();for(let i=0;i<=n*p;i++){const x=i/n*W,y=H-a[i]/m*(H-10)-5;i?g.lineTo(x,y):g.moveTo(x,y)}g.stroke()});
 g.fillStyle=ac;g.font='12px sans-serif';g.fillText('KM',6,14);g.fillStyle=bl;g.fillText('Nm',34,14)}
-function runDyno(){if(!dy||dy.run)return;const c=all()[dy.car];dy.run=true;const P=c.hp*(.97+Math.random()*.05);dy.c=curve(P,100);$('#rb').disabled=true;const t0=performance.now(),D=4000;
+function runDyno(){if(!dy||dy.run)return;const c=all()[dy.car],own=dy.car>=S.cars.length;dy.run=true;let P,hint='';
+if(own){const e=ev(c,c.tn);P=e.pk*(.99+Math.random()*.02);const d=c.tn.afr-e.afs,k=c.tn.ig-e.igs;
+hint=`AFR ${c.tn.afr.toFixed(1)}: ${d>.6?'za ubogo':d<-.6?'za bogato':'w porządku'} · Stuk: ${k>2.5?'silny':k>1?'lekki':'brak'}${e.T&&c.tn.bo>e.safe?' · ciśnienie ponad limit turbiny':''}`;
+if(Math.random()<e.r){P*=.75;if(!c.d.includes(5))c.d.push(5);hint='💥 Spalanie stukowe! Silnik uszkodzony ('+JOBS[5].n+'). '+hint}}
+else P=c.hp*(.97+Math.random()*.05);
+dy.hint=hint;dy.c=curve(P,100);$('#rb').disabled=true;const t0=performance.now(),D=4000;
 (function f(t){const p=Math.min(1,(t-t0)/D);draw(p);const i=Math.round(p*100),el=$('#lv');if(el)el.textContent=Math.round(1500+p*5500)+' obr/min · '+Math.round(dy.c.hp[i])+' KM · '+Math.round(dy.c.nm[i])+' Nm';
 if(p<1)return requestAnimationFrame(f);dy.run=false;const pk=Math.round(Math.max(...dy.c.hp)),nmx=Math.round(Math.max(...dy.c.nm));let m='';
 if(!c.best){const b=100*S.items.dyno;S.money+=b;S.xp+=15;m=' · premia '+fmt(b)}c.best=Math.max(c.best,pk);S.fol+=Math.round(pk/8);save();
-if(el)el.innerHTML='Wynik: <b>'+pk+' KM</b> · <b>'+nmx+' Nm</b>'+m;const rb=$('#rb');if(rb){rb.disabled=false;rb.textContent='Pomiar ponownie'}toast('Pomiar: '+pk+' KM')})(t0)}
+if(el)el.innerHTML='Wynik: <b>'+pk+' KM</b> · <b>'+nmx+' Nm</b>'+m;const hn=$('#hn');if(hn)hn.textContent=hint;const rb=$('#rb');if(rb){rb.disabled=false;rb.textContent='Pomiar ponownie'}toast('Pomiar: '+pk+' KM')})(t0)}
 function render(){const a=$('#app');if(scr=='menu')a.innerHTML=menuH();else if(scr=='slots')a.innerHTML=slotsH();else{a.innerHTML=head()+'<main>'+(S.job?workH():({o:ordH,e:eqH,g:garH,d:dynH,m:pauseH}[tab])())+'</main>'+(S.job?'':nav());if(!S.job&&tab=='d'&&dy&&dy.c&&!dy.run)draw(1)}}
 render();
 if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
