@@ -48,7 +48,7 @@ const JOBS=[
 {n:'Skan usterek',i:'diag',l:1,r:500,pn:'Czujniki',pc:150},{n:'Naprawa silnika',i:'diag',l:2,r:1600,pn:'Części silnika',pc:500},{n:'Remont turbo',i:'diag',l:3,r:3200,pn:'Turbosprężarka',pc:1000},
 {n:'Chip tuning',i:'tune',l:1,r:1200,pn:'Chip ECU',pc:400,hp:15},{n:'Wydech sportowy',i:'tune',l:2,r:2400,pn:'Wydech sportowy',pc:800,hp:25},
 {n:'Stage 2',i:'tune',l:3,r:5000,pn:'Kit Stage 2',pc:1700,hp:45},{n:'Stage 3',i:'tune',l:4,r:10000,pn:'Kit Stage 3',pc:3400,hp:80}];
-const CARS=[['Fiat 126p',23,2500],['Fiat Seicento',54,4000],['Polonez Caro',78,4500],['Daewoo Matiz',52,4500],['Škoda Felicia',68,5500],['Opel Corsa B',60,6000],['VW Golf III',75,6500],['Renault Clio II',75,7000],['Ford Fiesta Mk5',80,7500],['Opel Astra G',100,9000],['Toyota Corolla E11',110,11000],['Honda Civic EK',125,14000],['Audi A4 B6',130,16000],['Mazda MX-5 NA',115,18000],['BMW E46 320d',150,20000],['VW Golf IV GTI',150,22000],['Škoda Octavia RS',180,26000],['Subaru Impreza WRX',215,35000],['Mitsubishi Lancer Evo VI',280,45000],['BMW M3 E46',343,50000],['Porsche 911 (996)',320,60000],['Nissan Skyline R34',280,70000],['Toyota Supra A80',330,90000]];
+const CARS=[['Trabant 601',26,2000],['Syrena 105',40,2200],['Fiat 126p',23,2500],['Škoda Favorit',54,3500],['Fiat Seicento',54,4000],['Fiat Panda',69,4200],['Polonez Caro',78,4500],['Daewoo Matiz',52,4500],['Lada Niva',80,5000],['Škoda Felicia',68,5500],['Opel Corsa B',60,6000],['VW Golf III',75,6500],['Renault Clio II',75,7000],['Peugeot 206',75,7200],['Ford Fiesta Mk5',80,7500],['Seat Ibiza',90,8000],['Opel Astra G',100,9000],['Citroën Saxo VTS',120,9500],['Volvo V40',115,10000],['Toyota Corolla E11',110,11000],['VW Passat B5',130,12000],['Honda Civic EK',125,14000],['Opel Calibra',150,14500],['Mercedes W124 E220',150,15000],['Audi A4 B6',130,16000],['Mazda MX-5 NA',115,18000],['BMW E46 320d',150,20000],['Toyota Celica T23',190,20000],['VW Golf IV GTI',150,22000],['Audi TT 1.8T',180,24000],['Škoda Octavia RS',180,26000],['Audi S4 B5',265,28000],['Ford Focus RS',215,30000],['Subaru Impreza WRX',215,35000],['Honda S2000',240,38000],['Ford Mustang GT',300,40000],['Mazda RX-7 FD',255,42000],['Mitsubishi Lancer Evo VI',280,45000],['BMW M3 E46',343,50000],['BMW M5 E39',400,55000],['Porsche 911 (996)',320,60000],['Nissan Skyline R34',280,70000],['Mercedes C63 AMG',457,75000],['Toyota Supra A80',330,90000],['Nissan GT-R R35',480,100000],['Porsche 911 Turbo',480,120000],['Ferrari F430',490,140000],['Lamborghini Gallardo',520,150000]];
 const N=CARS.length,CL=['Pan Janusz','Kasia','Marek','Pani Ewa','Tomek','Bartek','Pani Zofia','Kamil','Ola','Dawid'];
 let S=null,slot=0,scr='menu',tab='o',conf='',mode='load',dy=null,tt,cat=0;
 const fmt=n=>Math.round(n).toLocaleString('pl-PL')+' zł';
@@ -56,34 +56,40 @@ const lv=()=>1+Math.floor(Math.sqrt(S.xp/60)),minLv=i=>Math.max(1,Math.ceil((i-2
 const val=c=>Math.round((CARS[c.ci][2]*(1-.15*c.d.length)+(c.hp-c.base)*50)/10)*10;
 const all=()=>S.cars.concat(S.own),pos=()=>(1+Math.sin(Date.now()/280))/2*100;
 const can=o=>{const j=JOBS[o.j];return S.items[j.i]>=j.l&&!S.br[j.i]};
-const key=n=>'wt2_slot'+n,rnd=a=>a[Math.random()*a.length|0],sh=a=>a.sort(()=>Math.random()-.5);
+const MG=["0:Spuść stary olej — stukaj!|1:Dobierz właściwą część|4:Dolej oleju — trzymaj i puść w zielonym polu","0:Zdejmij koło — stukaj!|1:Dobierz klocki|2:Dokręć zacisk w zielonej strefie","0:Zdejmij sprężynę — stukaj!|1:Dobierz amortyzator|3:Dokręć śruby w zapamiętanej kolejności","0:Rozkręć skrzynię — stukaj!|3:Skręć docisk w zapamiętanej kolejności|2:Dociśnij sprzęgło w zielonej strefie","1:Wskaż właściwy czujnik|3:Wpisz zapamiętany kod serwisowy|2:Skalibruj w zielonej strefie","0:Zdejmij głowicę — stukaj!|3:Dokręć głowicę w zapamiętanej kolejności|4:Nałóż uszczelkę — trzymaj i puść w polu","0:Odkręć kolektor — stukaj!|4:Napełnij turbo olejem — trzymaj i puść w polu|2:Wyważ wirnik w zielonej strefie","1:Wybierz właściwy chip|2:Wgraj mapę w zielonej strefie|3:Wpisz zapamiętany kod autoryzacji","0:Zdejmij stary wydech — stukaj!|4:Spawaj — trzymaj i puść w polu|1:Dobierz tłumik","4:Doładuj ciśnienie — trzymaj i puść w polu|3:Wpisz zapamiętany kod mapy|2:Dostrój zawór w zielonej strefie","3:Wpisz zapamiętany kod kalibracji|2:Zsynchronizuj turbiny w zielonej strefie|4:Dolej nitro — trzymaj i puść w polu"];
+const steps=i=>MG[i].split('|').map(x=>{const k=x.indexOf(':');return[+x.slice(0,k),x.slice(k+1)]});
+const tg=()=>5+Math.min(3,Math.floor(Math.sqrt(S.fol)/30)),pm=()=>1+Math.min(.5,Math.sqrt(S.fol)/400);
+const key=n=>'wt3_slot'+n,rnd=a=>a[Math.random()*a.length|0],sh=a=>a.sort(()=>Math.random()-.5);
 function toast(m){const t=$('#toast');t.textContent=m;t.style.opacity=1;clearTimeout(tt);tt=setTimeout(()=>t.style.opacity=0,2200)}
 const cmax=()=>Math.min(N-1,Math.random()*(lv()*3+3)|0);
 function mk(av){const c=[];JOBS.forEach((j,i)=>{if(S.items[j.i]+(av?0:1)>=j.l)c.push(i)});const ji=rnd(c),j=JOBS[ji],ci=cmax();
 return{id:Math.random().toString(36).slice(2),j:ji,car:ci,cl:rnd(CL),p:Math.round(j.r*(.9+Math.random()*.35)*(1+ci*.03)/5)*5}}
-function fill(){while(S.orders.length<5)S.orders.push(mk(S.orders.filter(can).length<3))}
+function fill(){while(S.orders.length<tg())S.orders.push(mk(S.orders.filter(can).length<3))}
 function mkM(){const ci=cmax(),d=[];for(let k=1+(Math.random()*3|0);k>0;k--)d.push(Math.random()*7|0);const c={ci,n:CARS[ci][0],hp:CARS[ci][1],base:CARS[ci][1],d,best:0,st:'własne',t:0};c.p=Math.round(val(c)*.85/10)*10;return c}
 function mkt(){while(S.mkt.length<4)S.mkt.push(mkM())}
-function norm(d){d.br=d.br||{};d.parts=d.parts||{};d.own=d.own||[];d.mkt=d.mkt||[];d.nb=d.nb||Date.now()+9e4;if(d.job&&!d.job.o)d.job=null;S=d;fill();mkt();return d}
-function newGame(){norm({money:300,xp:0,done:0,items:{tool:1,lift:0,diag:0,tune:0,dyno:0},orders:[],cars:[]})}
-function save(){if(!S)return;st.set(key(slot),JSON.stringify(S));st.set('wt2_last',slot)}
+function norm(d){d.br=d.br||{};d.parts=d.parts||{};d.own=d.own||[];d.mkt=d.mkt||[];d.nb=d.nb||Date.now()+9e4;d.no=Date.now()+3e4;d.fol=d.fol==null?50:d.fol;d.loan=d.loan||0;d.pt=0;if(d.job&&!d.job.o)d.job=null;if(d.job){d.job.seq=null;d.job.f=0;d.job.h=0;d.job.in=[]}S=d;fill();mkt();return d}
+function newGame(){norm({money:300,xp:0,done:0,fol:50,loan:0,items:{tool:1,lift:0,diag:0,tune:0,dyno:0},orders:[],cars:[]})}
+function save(){if(!S)return;st.set(key(slot),JSON.stringify(S));st.set('wt3_last',slot)}
 function readSlot(n){try{return JSON.parse(st.get(key(n)))}catch(e){return null}}
 function startJob(o,own){const j=JOBS[o.j];if(S.job)return;if(!can(o))return toast(S.br[j.i]?'Awaria sprzętu! Napraw go w sklepie.':'Brak sprzętu: '+ITEMS.find(x=>x.id==j.i).n+' poz. '+j.l);
 if(!(S.parts[j.pn]>0))return toast('Brak części: '+j.pn+' (kup w sklepie)');S.parts[j.pn]--;
-S.job={o,own:own==null?-1:own,k:sh([0,1,2]),s:0,sc:0,n:0,opts:sh([j.pn,...sh(JOBS.filter(x=>x.pn!=j.pn)).slice(0,2).map(x=>x.pn)])};save()}
-function adv(ok){const J=S.job;J.sc+=ok?1:0;J.s++;toast(ok?'✔ Dobrze':'✖ Błąd');if(J.s>=3)done()}
+S.job={o,own:own==null?-1:own,s:0,sc:0,n:0,opts:sh([j.pn,...sh(JOBS.filter(x=>x.pn!=j.pn)).slice(0,2).map(x=>x.pn)])};save()}
+function adv(ok){const J=S.job;J.sc+=ok?1:0;J.s++;J.seq=null;J.in=[];J.f=0;J.h=0;J.n=0;toast(ok?'✔ Dobrze':'✖ Błąd');if(J.s>=3)done()}
 function done(){const J=S.job,o=J.o,j=JOBS[o.j],q=J.sc,m=[.4,.7,.9,1.15][q],g=j.hp?Math.round(j.hp*[.5,.75,1,1.15][q]):0;let msg;S.job=null;
-if(J.own<0){const pay=Math.round(o.p*m);S.money+=pay;S.xp+=Math.round(pay/10);S.done++;
+if(J.own<0){const pay=Math.round(o.p*m*pm());S.money+=pay;S.xp+=Math.round(pay/10);S.done++;S.fol+=Math.round((q*q+q*3+1)*(1+o.car/10));
+if(S.loan>0){const r=Math.min(S.loan,Math.round(pay*.25));S.loan-=r;S.money-=r}
 if(g){S.cars.push({n:CARS[o.car][0],hp:CARS[o.car][1]+g,base:CARS[o.car][1],best:0,st:j.n});if(S.cars.length>12)S.cars.shift()}
 S.orders=S.orders.filter(x=>x.id!=o.id);fill();msg='+'+fmt(pay)}
-else{const c=S.own[J.own];S.xp+=10;if(g){c.hp+=g;c.t++;msg='+'+g+' KM'}else if(q>0){c.d.splice(c.d.indexOf(o.j),1);msg='usterka naprawiona'}else msg='naprawa nieudana, część stracona'}
+else{const c=S.own[J.own];S.xp+=10;S.fol+=q*2+Math.round(g/3);if(g){c.hp+=g;c.t++;msg='+'+g+' KM'}else if(q>0){c.d.splice(c.d.indexOf(o.j),1);msg='usterka naprawiona'}else msg='naprawa nieudana, część stracona'}
 save();toast('Jakość '+q+'/3 · '+msg)}
-setInterval(()=>{if(!S||scr!='game')return;const m=$('#mk');if(m)m.style.left=pos()+'%';
-if(Date.now()>S.nb){S.nb=Date.now()+6e4+Math.random()*9e4;const o=ITEMS.filter(x=>S.items[x.id]&&!S.br[x.id]);if(o.length){const it=rnd(o);S.br[it.id]=1;toast('⚠ Awaria: '+it.n+'!');save();if(!S.job)render()}}},50);
+setInterval(()=>{if(!S||scr!='game')return;const J=S.job,m=$('#mk'),t=Date.now();if(m)m.style.left=pos()+'%';
+if(J&&J.h){J.f=Math.min(100,(J.f||0)+2.2);const f=$('#fb');if(f)f.style.width=J.f+'%'}
+if(t>S.nb){S.nb=t+6e4+Math.random()*9e4;const o=ITEMS.filter(x=>S.items[x.id]&&!S.br[x.id]);if(o.length){const it=rnd(o);S.br[it.id]=1;toast('⚠ Awaria: '+it.n+'!');save();if(!S.job)render()}}
+if(t>S.no){S.no=t+3e4;if(S.orders.length<tg()){S.orders.push(mk(S.orders.filter(can).length<3));if(!S.job&&tab=='o')render()}}},50);
 window.A=(a,v)=>{
 if(a=='new'){mode='new';scr='slots';conf=''}
 else if(a=='load'){mode='load';scr='slots';conf=''}
-else if(a=='cont'){const n=+st.get('wt2_last'),d=readSlot(n);if(d){slot=n;norm(d);scr='game';tab='o'}}
+else if(a=='cont'){const n=+st.get('wt3_last'),d=readSlot(n);if(d){slot=n;norm(d);scr='game';tab='o'}}
 else if(a=='menu'){scr='menu'}
 else if(a=='help'){toast('Bierz zlecenia, kupuj części, wykonuj naprawy w minigrach, kupuj auta na giełdzie i mierz moc na hamowni.')}
 else if(a=='slot'){const d=readSlot(v);
@@ -101,9 +107,16 @@ else if(a=='buy'){const it=ITEMS.find(x=>x.id==v),l=S.items[v],c=Math.round(it.b
 else if(a=='fix'){const it=ITEMS.find(x=>x.id==v),c=Math.round(it.b*Math.pow(2.1,Math.max(0,S.items[v]-1))*.25);if(S.money<c)return;S.money-=c;delete S.br[v];save();toast('Naprawiono: '+it.n)}
 else if(a=='bp'){const[i,n]=v.split(',').map(Number),j=JOBS[i];if(S.money<j.pc*n)return;S.money-=j.pc*n;S.parts[j.pn]=(S.parts[j.pn]||0)+n;save()}
 else if(a=='buy2'){const c=S.mkt[v];if(S.own.length>=4)return toast('Garaż pełny (4 auta). Sprzedaj któreś.');if(S.money<c.p)return;S.money-=c.p;delete c.p;S.own.push(c);S.mkt.splice(v,1);mkt();save()}
-else if(a=='sell'){const c=S.own[v];S.money+=val(c);S.own.splice(v,1);S.xp+=15;save();toast('Sprzedano: '+c.n)}
+else if(a=='sell'){const c=S.own[v];S.money+=Math.round(val(c)*pm());S.fol+=Math.round(val(c)/400);S.own.splice(v,1);S.xp+=15;save();toast('Sprzedano: '+c.n)}
 else if(a=='mref'){if(S.money<100)return;S.money-=100;S.mkt=[];mkt();save()}
 else if(a=='rep'||a=='tun'){const[i,ji]=v.split(',').map(Number);startJob({j:ji,car:S.own[i].ci,p:0,cl:'Ty'},i)}
+else if(a=='fd'){S.job.h=1;return}
+else if(a=='fu'){const J=S.job;if(!J||!J.h)return;J.h=0;adv(J.f>=62&&J.f<=88)}
+else if(a=='wk'){const J=S.job;J.in.push(v);const i=J.in.length-1;if(J.seq[i]!=v)adv(0);else if(J.in.length==J.seq.length)adv(1)}
+else if(a=='post'){const t=Date.now();if(t<S.pt)return toast('Poczekaj '+Math.ceil((S.pt-t)/1e3)+' s');S.pt=t+45e3;const g=Math.round(5+S.fol*.02+Math.random()*10);S.fol+=g;save();toast('📸 Post: +'+g+' obserwujących')}
+else if(a=='ad'){const c=Math.round(100+S.fol*.3);if(S.money<c)return;S.money-=c;const g=Math.round(15+S.fol*.08*(.5+Math.random()));S.fol+=g;save();toast('📸 Reklama: +'+g+' obserwujących')}
+else if(a=='loan'){if(S.loan>0||lv()<(v==500?1:v==1000?3:5))return;S.money+=v;S.loan=Math.round(v*1.15);save();toast('Pożyczka: '+fmt(v))}
+else if(a=='rp'){const x=Math.min(S.loan,S.money,v||S.loan);S.loan-=x;S.money-=x;save()}
 else if(a=='cat'){cat=!cat}
 else if(a=='save'){save();toast('Zapisano grę')}
 else if(a=='exit'){save();scr='menu'}
@@ -111,19 +124,22 @@ else if(a=='quit'){scr='menu'}
 else if(a=='pick'){dy={car:+v}}
 else if(a=='run'){runDyno();return}
 render()}
-function menuH(){const has=readSlot(+st.get('wt2_last'));return `<div class="mn"><div class="big">🔧🚗</div><h1 style="text-align:center">Warsztat Tuning</h1><p class="mu" style="text-align:center;margin:0 0 12px">Naprawiaj, tuninguj, handluj autami.</p>
+function menuH(){const has=readSlot(+st.get('wt3_last'));return `<div class="mn"><div class="big">🔧🚗</div><h1 style="text-align:center">Warsztat Tuning</h1><p class="mu" style="text-align:center;margin:0 0 12px">Naprawiaj, tuninguj, handluj autami.</p>
 ${has?'<button onclick="A(\'cont\')">Kontynuuj</button>':''}<button onclick="A('new')">Nowa gra</button><button class="g" onclick="A('load')">Wczytaj grę</button><button class="g" onclick="A('help')">Jak grać</button></div>`}
 function slotsH(){let h=`<div class="mn"><h1>${mode=='new'?'Nowa gra':'Wczytaj grę'}</h1><p class="mu">Wybierz miejsce zapisu</p>`;
 for(let n=1;n<=3;n++){const d=readSlot(n);h+=`<div class="cd"><div class="row"><div><b>Slot ${n}</b><div class="mu">${d?fmt(d.money)+' · poz. '+(1+Math.floor(Math.sqrt(d.xp/60)))+' · zleceń: '+d.done:'pusty'}</div></div>
 <div style="display:flex;gap:6px">${d?`<button class="s g" onclick="A('del',${n})">🗑</button>`:''}<button class="s" ${mode=='load'&&!d?'disabled':''} onclick="A('slot',${n})">${mode=='load'?'Wczytaj':(conf==n?'Nadpisać?':'Start')}</button></div></div></div>`}
 return h+`<button class="g" onclick="A('menu')">← Wróć</button></div>`}
-function head(){const l=lv(),a=60*(l-1)**2,b=60*l*l,p=(S.xp-a)/(b-a)*100;return `<div class="hd"><div class="row"><b>💰 ${fmt(S.money)}</b><span class="pill">Poziom ${l}</span></div><div class="bar" style="height:6px;margin:6px 0 0"><i style="width:${p}%;background:var(--bl)"></i></div></div>`}
-function nav(){const t=[['o','📋','Zlecenia'],['e','🛒','Sklep'],['g','🚘','Garaż'],['d','📈','Hamownia'],['m','☰','Menu']];return `<div class="nav"><div>${t.map(x=>`<button class="${tab==x[0]?'on':''}" onclick="A('tab','${x[0]}')">${x[1]}<br>${x[2]}</button>`).join('')}</div></div>`}
-function workH(){const J=S.job,o=J.o,j=JOBS[o.j],ty=J.k[J.s];let b;
-if(ty==0){const nd=Math.max(5,14-2*S.items.tool);b=`<p>Zdemontuj stare elementy — stukaj!</p><div class="bar"><i id="tb" style="width:${J.n/nd*100}%"></i></div><button style="padding:34px" onclick="A('wt')">🔩 Odkręcaj (<span id="tc">${J.n}</span>/${nd})</button>`}
-else if(ty==1)b='<p>Wybierz właściwą część:</p>'+J.opts.map((x,i)=>`<button class="g" style="margin-bottom:8px" onclick="A('wc',${i})">${x}</button>`).join('');
-else{const hw=8+3*S.items.tool;b=`<p>Dokręć, gdy znacznik jest w zielonej strefie!</p><div class="tm"><div class="zn" style="left:${50-hw}%;width:${hw*2}%"></div><div class="mk" id="mk"></div></div><button style="margin-top:12px;padding:26px" onclick="A('wm')">🔧 Dokręć!</button>`}
-return `<div class="cd"><div class="row"><b>${j.n}</b><span class="pill">krok ${J.s+1}/3</span></div><div class="mu">${CARS[o.car][0]} · ${o.cl}</div>${b}</div><button class="g" onclick="A('abort')">Przerwij (część przepada)</button>`}
+function head(){const l=lv(),a=60*(l-1)**2,b=60*l*l,p=(S.xp-a)/(b-a)*100;return `<div class="hd"><div class="row"><div><b>💰 ${fmt(S.money)}</b>${S.loan>0?'<div class="mu">dług: '+fmt(S.loan)+'</div>':''}</div><span><span class="pill">📸 ${S.fol.toLocaleString('pl-PL')}</span> <span class="pill">Poz. ${l}</span></span></div><div class="bar" style="height:6px;margin:6px 0 0"><i style="width:${p}%;background:var(--bl)"></i></div></div>`}
+function nav(){const t=[['o','📋','Zlecenia'],['e','🛒','Sklep'],['g','🚘','Garaż'],['d','📈','Hamownia'],['m','☰','Więcej']];return `<div class="nav"><div>${t.map(x=>`<button class="${tab==x[0]?'on':''}" onclick="A('tab','${x[0]}')">${x[1]}<br>${x[2]}</button>`).join('')}</div></div>`}
+function workH(){const J=S.job,o=J.o,j=JOBS[o.j],[ty,lb]=steps(o.j)[J.s];let b;
+if(ty==0){const nd=Math.max(5,14-2*S.items.tool);b=`<div class="bar"><i id="tb" style="width:${J.n/nd*100}%"></i></div><button style="padding:34px" onclick="A('wt')">🔩 Stukaj (<span id="tc">${J.n}</span>/${nd})</button>`}
+else if(ty==1)b=J.opts.map((x,i)=>`<button class="g" style="margin-bottom:8px" onclick="A('wc',${i})">${x}</button>`).join('');
+else if(ty==2){const hw=8+3*S.items.tool;b=`<div class="tm"><div class="zn" style="left:${50-hw}%;width:${hw*2}%"></div><div class="mk" id="mk"></div></div><button style="margin-top:12px;padding:26px" onclick="A('wm')">🔧 Teraz!</button>`}
+else if(ty==3){if(!J.seq){J.seq=Array.from({length:4+(Math.random()*2|0)},()=>1+(Math.random()*4|0));J.in=[];J.until=Date.now()+2300;setTimeout(()=>{if(S&&S.job===J&&scr=='game')render()},2350)}
+b=Date.now()<J.until?`<div class="big" style="letter-spacing:8px">${J.seq.join(' ')}</div><p class="mu" style="text-align:center">Zapamiętaj!</p>`:`<p>Wpisano: ${J.in.join(' ')||'—'}</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">${[1,2,3,4].map(n=>`<button style="padding:24px" onclick="A('wk',${n})">${n}</button>`).join('')}</div>`}
+else b=`<div class="tm"><div id="fb" style="position:absolute;top:0;bottom:0;left:0;width:${J.f||0}%;background:var(--bl);opacity:.75"></div><div class="zn" style="left:62%;width:26%"></div></div><button style="margin-top:12px;padding:30px;touch-action:none" oncontextmenu="return false" onpointerdown="A('fd')" onpointerup="A('fu')" onpointercancel="A('fu')">💧 Trzymaj</button>`;
+return `<div class="cd"><div class="row"><b>${j.n}</b><span class="pill">krok ${J.s+1}/3</span></div><div class="mu">${CARS[o.car][0]} · ${o.cl}</div><p><b>${lb}</b></p>${b}</div><button class="g" onclick="A('abort')">Przerwij (część przepada)</button>`}
 function ordH(){let h='<h2>Zlecenia klientów</h2>';
 S.orders.forEach(o=>{const j=JOBS[o.j],ok=can(o),it=ITEMS.find(x=>x.id==j.i),np=S.parts[j.pn]||0;
 h+=`<div class="cd"><div class="row"><div><b>${j.n}</b>${j.hp?' <span class="pill">tuning +'+j.hp+' KM</span>':''}<div class="mu">${o.cl} · ${CARS[o.car][0]}</div><div class="mu">Część: ${j.pn} (masz ${np})</div>${ok?'':`<div class="mu">🔒 ${S.br[j.i]?'Awaria: '+it.n:'Wymaga: '+it.n+' poz. '+j.l}</div>`}</div><b style="color:var(--ok)">${fmt(o.p)}</b></div>
@@ -146,7 +162,11 @@ if(!dy||!L[dy.car])dy={car:L.length-1};const c=L[dy.car];
 return `<h2>Hamownia</h2><div class="cd"><select style="width:100%;font:inherit;padding:10px;border-radius:10px;background:var(--bg);color:var(--tx);border:1px solid var(--bd)" onchange="A('pick',this.value)">${L.map((x,i)=>`<option value="${i}" ${i==dy.car?'selected':''}>${x.n} (${x.st})</option>`).join('')}</select>
 <div class="mu" style="margin:8px 0">Seria: ${c.base} KM · teraz ok. ${c.hp} KM${c.best?' · Najlepszy pomiar: <b>'+c.best+' KM</b>':''}</div>
 <canvas id="cv" width="340" height="190"></canvas><div id="lv" class="mu" style="text-align:center;margin:6px 0">Gotowy do pomiaru</div><button id="rb" onclick="A('run')">Uruchom pomiar</button></div>`}
-function pauseH(){return `<h2>Menu</h2><div class="cd mu">Gra zapisuje się automatycznie po każdym zleceniu i zakupie. Slot: ${slot}.</div><div class="mn" style="padding:0"><button onclick="A('save')">💾 Zapisz grę</button><button class="g" onclick="A('exit')">Zapisz i wyjdź do menu</button><button class="g" onclick="A('quit')">Wyjdź bez zapisu</button></div>`}
+function pauseH(){const f=S.fol,tier=f<200?'Początkujący':f<1000?'Lokalny warsztat':f<5000?'Znany w mieście':f<20000?'Influencer':'Gwiazda tuningu',ad=Math.round(100+f*.3);
+let h=`<h2>📸 Instagram</h2><div class="cd"><div class="row"><b>${f.toLocaleString('pl-PL')} obserwujących</b><span class="pill">${tier}</span></div><div class="mu">Bonus do zarobków: +${Math.round((pm()-1)*100)}% · zleceń naraz: ${tg()}</div><div class="row" style="margin-top:8px;gap:8px"><button onclick="A('post')">Wstaw post</button><button class="g" ${S.money<ad?'disabled':''} onclick="A('ad')">Reklama · ${fmt(ad)}</button></div></div><h2>🏦 Bank</h2><div class="cd">`;
+if(S.loan>0)h+=`<b>Dług: ${fmt(S.loan)}</b><div class="mu">25% płatności za zlecenia idzie na spłatę.</div><div class="row" style="margin-top:8px;gap:8px"><button ${S.money<=0?'disabled':''} onclick="A('rp',0)">Spłać wszystko</button><button class="g" onclick="A('rp',500)">Spłać 500</button></div>`;
+else h+='<div class="mu" style="margin-bottom:8px">Pożyczka z oprocentowaniem 15%, jedna naraz.</div>'+[[500,1],[1000,3],[2000,5]].map(([a,l])=>`<button class="g" style="margin-bottom:8px" ${lv()<l?'disabled':''} onclick="A('loan',${a})">${lv()<l?'🔒 poz. '+l+' · ':''}Weź ${fmt(a)} (do zwrotu ${fmt(a*1.15)})</button>`).join('');
+return h+`</div><h2>Menu</h2><div class="cd mu">Autozapis po każdym zleceniu i zakupie. Slot: ${slot}.</div><div class="mn" style="padding:0"><button onclick="A('save')">💾 Zapisz grę</button><button class="g" onclick="A('exit')">Zapisz i wyjdź do menu</button><button class="g" onclick="A('quit')">Wyjdź bez zapisu</button></div>`}
 function curve(P,n){const hp=[],nm=[];for(let i=0;i<=n;i++){const x=i/n,r=1500+x*5500,h=P*Math.max(.12,Math.sin(Math.PI/2*Math.min(1,x/.75))*(1-.35*Math.pow(Math.max(0,(x-.75)/.25),2)));hp.push(h);nm.push(h*7023/r)}return{hp,nm}}
 function draw(p){const cv=$('#cv');if(!cv||!dy||!dy.c)return;const g=cv.getContext('2d'),W=340,H=190,cs=getComputedStyle(document.documentElement),ac=cs.getPropertyValue('--ac'),bl=cs.getPropertyValue('--bl'),mu=cs.getPropertyValue('--mu');
 g.clearRect(0,0,W,H);g.strokeStyle=mu;g.globalAlpha=.3;for(let i=1;i<5;i++){g.beginPath();g.moveTo(0,i*H/5);g.lineTo(W,i*H/5);g.stroke()}g.globalAlpha=1;
@@ -156,7 +176,7 @@ g.fillStyle=ac;g.font='12px sans-serif';g.fillText('KM',6,14);g.fillStyle=bl;g.f
 function runDyno(){if(!dy||dy.run)return;const c=all()[dy.car];dy.run=true;const P=c.hp*(.97+Math.random()*.05);dy.c=curve(P,100);$('#rb').disabled=true;const t0=performance.now(),D=4000;
 (function f(t){const p=Math.min(1,(t-t0)/D);draw(p);const i=Math.round(p*100),el=$('#lv');if(el)el.textContent=Math.round(1500+p*5500)+' obr/min · '+Math.round(dy.c.hp[i])+' KM · '+Math.round(dy.c.nm[i])+' Nm';
 if(p<1)return requestAnimationFrame(f);dy.run=false;const pk=Math.round(Math.max(...dy.c.hp)),nmx=Math.round(Math.max(...dy.c.nm));let m='';
-if(!c.best){const b=100*S.items.dyno;S.money+=b;S.xp+=15;m=' · premia '+fmt(b)}c.best=Math.max(c.best,pk);save();
+if(!c.best){const b=100*S.items.dyno;S.money+=b;S.xp+=15;m=' · premia '+fmt(b)}c.best=Math.max(c.best,pk);S.fol+=Math.round(pk/8);save();
 if(el)el.innerHTML='Wynik: <b>'+pk+' KM</b> · <b>'+nmx+' Nm</b>'+m;const rb=$('#rb');if(rb){rb.disabled=false;rb.textContent='Pomiar ponownie'}toast('Pomiar: '+pk+' KM')})(t0)}
 function render(){const a=$('#app');if(scr=='menu')a.innerHTML=menuH();else if(scr=='slots')a.innerHTML=slotsH();else{a.innerHTML=head()+'<main>'+(S.job?workH():({o:ordH,e:eqH,g:garH,d:dynH,m:pauseH}[tab])())+'</main>'+(S.job?'':nav());if(!S.job&&tab=='d'&&dy&&dy.c&&!dy.run)draw(1)}}
 render();
